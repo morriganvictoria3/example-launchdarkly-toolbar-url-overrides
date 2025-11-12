@@ -165,20 +165,6 @@ async function initializeLaunchDarkly(clientSideID) {
 
     const eventInterceptionPlugin = new EventInterceptionPlugin();
 
-    // Store reference to client for display updates
-    let ldClient = null;
-
-    // Register callback for display updates when overrides change
-    flagOverridePlugin.onOverrideChange((flagKey, action) => {
-        if (!ldClient) return;
-
-        if (action === 'clear') {
-            displayFlags(ldClient, flagOverridePlugin);
-        } else if (flagKey) {
-            updateFlagDisplay(ldClient, flagKey, flagOverridePlugin);
-        }
-    });
-
     const context = {
         kind: 'user',
         key: 'example-user-' + Math.random().toString(36).substring(7),
@@ -195,9 +181,6 @@ async function initializeLaunchDarkly(clientSideID) {
 
         // Wait for initialization
         await client.waitForInitialization();
-
-        // Store client reference for use in monkey patches
-        ldClient = client;
 
         logger.info('LaunchDarkly client initialized successfully');
 

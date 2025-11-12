@@ -19,10 +19,6 @@ export function createFlagUrlOverridePlugin(options = {}) {
     // Create the underlying plugin
     const plugin = new FlagOverridePlugin(overrideOptions);
 
-    // Store reference to client for display updates
-    let ldClient = null;
-    let updateDisplayCallback = null;
-
     /**
      * Load overrides from URL query parameters
      */
@@ -98,37 +94,25 @@ export function createFlagUrlOverridePlugin(options = {}) {
         }
     }
 
-    // Monkey patch setOverride to sync to URL and update display
+    // Monkey patch setOverride to sync to URL
     const originalSetOverride = plugin.setOverride.bind(plugin);
     plugin.setOverride = function(flagKey, value) {
         originalSetOverride(flagKey, value);
         syncOverridesToUrl(this.getAllOverrides());
-        // Notify callback if registered
-        if (updateDisplayCallback) {
-            updateDisplayCallback(flagKey, 'set');
-        }
     };
 
-    // Monkey patch removeOverride to sync to URL and update display
+    // Monkey patch removeOverride to sync to URL
     const originalRemoveOverride = plugin.removeOverride.bind(plugin);
     plugin.removeOverride = function(flagKey) {
         originalRemoveOverride(flagKey);
         syncOverridesToUrl(this.getAllOverrides());
-        // Notify callback if registered
-        if (updateDisplayCallback) {
-            updateDisplayCallback(flagKey, 'remove');
-        }
     };
 
-    // Monkey patch clearAllOverrides to sync to URL and refresh all flags
+    // Monkey patch clearAllOverrides to sync to URL
     const originalClearAllOverrides = plugin.clearAllOverrides.bind(plugin);
     plugin.clearAllOverrides = function() {
         originalClearAllOverrides();
         syncOverridesToUrl(this.getAllOverrides());
-        // Notify callback if registered
-        if (updateDisplayCallback) {
-            updateDisplayCallback(null, 'clear');
-        }
     };
 
     // Monkey patch registerDebug to load URL overrides
@@ -147,11 +131,6 @@ export function createFlagUrlOverridePlugin(options = {}) {
         if (Object.keys(urlOverrides).length > 0) {
             logger.info(`Loaded ${Object.keys(urlOverrides).length} overrides from URL`);
         }
-    };
-
-    // Add helper method to register display update callback
-    plugin.onOverrideChange = function(callback) {
-        updateDisplayCallback = callback;
     };
 
     // Add helper method to sync initial overrides to URL
