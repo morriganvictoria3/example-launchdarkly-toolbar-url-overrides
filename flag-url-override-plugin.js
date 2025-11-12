@@ -1,10 +1,19 @@
 import { FlagOverridePlugin } from '@launchdarkly/toolbar';
 
+// Clear mode symbols for type-safe configuration
+export const CLEAR_MODE_EXPLICIT = Symbol('explicit');
+export const CLEAR_MODE_ALWAYS = Symbol('always');
+export const CLEAR_MODE_AUTO = Symbol('auto');
+
 /**
  * Creates a FlagOverridePlugin wrapper that syncs overrides to/from URL parameters
  *
  * @param {Object} options - Configuration options
  * @param {string} options.parameterPrefix - Prefix for URL parameters (default: 'ld_override_')
+ * @param {Symbol} options.clearMode - When to clear existing overrides (default: CLEAR_MODE_AUTO)
+ *   - CLEAR_MODE_EXPLICIT: Only clear if ld_override__clear is present
+ *   - CLEAR_MODE_ALWAYS: Always clear before loading from URL
+ *   - CLEAR_MODE_AUTO: Auto-clear if any override parameters are present
  * @param {Object} options.overrideOptions - Options to pass to the underlying FlagOverridePlugin
  * @param {Function} options.logger - Optional logger function for debugging
  * @returns {Object} A wrapped FlagOverridePlugin with URL sync capabilities
@@ -12,6 +21,7 @@ import { FlagOverridePlugin } from '@launchdarkly/toolbar';
 export function createFlagUrlOverridePlugin(options = {}) {
     const {
         parameterPrefix = 'ld_override_',
+        clearMode = CLEAR_MODE_AUTO,
         overrideOptions = {},
         logger = console
     } = options;
@@ -21,25 +31,57 @@ export function createFlagUrlOverridePlugin(options = {}) {
 
     /**
      * Load overrides from URL query parameters
+     * Returns an object with:
+     * - overrides: map of flag keys to values
+     * - shouldClear: boolean indicating if all overrides should be cleared first
+     * - removeFlags: array of flag keys to explicitly remove
      */
     function loadOverridesFromUrl() {
         const urlParams = new URLSearchParams(window.location.search);
         const overrides = {};
+        const removeFlags = [];
+        let hasOverrideParams = false;
+
+        // Check for special _clear flag (just needs to be present)
+        const hasClearFlag = urlParams.has(`${parameterPrefix}_clear`);
 
         for (const [key, value] of urlParams.entries()) {
             if (key.startsWith(parameterPrefix)) {
                 const flagKey = key.replace(parameterPrefix, '');
-                try {
-                    // Try to parse as JSON
-                    overrides[flagKey] = JSON.parse(value);
-                } catch (e) {
-                    // If parsing fails, treat as string
-                    overrides[flagKey] = value;
+
+                // Skip the special _clear flag
+                if (flagKey === '_clear') {
+                    continue;
+                }
+
+                hasOverrideParams = true;
+
+                // Empty value means remove this override
+                if (value === '') {
+                    removeFlags.push(flagKey);
+                } else {
+                    try {
+                        // Try to parse as JSON
+                        overrides[flagKey] = JSON.parse(value);
+                    } catch (e) {
+                        // If parsing fails, treat as string
+                        overrides[flagKey] = value;
+                    }
                 }
             }
         }
 
-        return overrides;
+        // Determine if we should clear based on clearMode
+        let shouldClear = false;
+        if (clearMode === CLEAR_MODE_ALWAYS) {
+            shouldClear = true;
+        } else if (clearMode === CLEAR_MODE_AUTO) {
+            shouldClear = hasOverrideParams || hasClearFlag;
+        } else if (clearMode === CLEAR_MODE_EXPLICIT) {
+            shouldClear = hasClearFlag;
+        }
+
+        return { overrides, shouldClear, removeFlags };
     }
 
     /**
@@ -118,18 +160,37 @@ export function createFlagUrlOverridePlugin(options = {}) {
     // Monkey patch registerDebug to load URL overrides
     const originalRegisterDebug = plugin.registerDebug.bind(plugin);
     plugin.registerDebug = function(debugOverride) {
-        // Call original implementation first
+        // Call original implementation first (loads from localStorage)
         originalRegisterDebug(debugOverride);
 
-        // Load overrides from URL and apply them (using original method to avoid recursion)
-        const urlOverrides = loadOverridesFromUrl();
-        Object.entries(urlOverrides).forEach(([flagKey, value]) => {
+        // Load override instructions from URL
+        const { overrides, shouldClear, removeFlags } = loadOverridesFromUrl();
+
+        // Clear all existing overrides if needed (based on clearMode)
+        if (shouldClear) {
+            const reason = clearMode === CLEAR_MODE_ALWAYS
+                ? 'clearMode=ALWAYS'
+                : clearMode === CLEAR_MODE_AUTO
+                    ? 'clearMode=AUTO (URL params present)'
+                    : 'ld_override__clear flag';
+            logger.info(`Clearing all existing overrides (${reason})`);
+            originalClearAllOverrides();
+        }
+
+        // Remove specific flags if requested
+        removeFlags.forEach(flagKey => {
+            logger.info(`Removing override from URL: ${flagKey}`);
+            originalRemoveOverride(flagKey);
+        });
+
+        // Apply overrides from URL (using original method to avoid recursion)
+        Object.entries(overrides).forEach(([flagKey, value]) => {
             logger.info(`Loading override from URL: ${flagKey} = ${JSON.stringify(value)}`);
             originalSetOverride(flagKey, value);
         });
 
-        if (Object.keys(urlOverrides).length > 0) {
-            logger.info(`Loaded ${Object.keys(urlOverrides).length} overrides from URL`);
+        if (Object.keys(overrides).length > 0) {
+            logger.info(`Loaded ${Object.keys(overrides).length} overrides from URL`);
         }
     };
 
