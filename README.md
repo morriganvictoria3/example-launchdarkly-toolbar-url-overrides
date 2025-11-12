@@ -6,6 +6,8 @@ A simple HTML5 application that provides a visual interface for viewing and mana
 
 > **LaunchDarkly Labs**: This repository is maintained by LaunchDarkly Labs. While we try to keep it up to date, it is not officially supported by LaunchDarkly. For officially supported SDKs and tools, visit [launchdarkly.com](https://launchdarkly.com).
 
+![LaunchDarkly Dev Toolbar with URL-Shareable Overrides](./screenshot.png)
+
 ## Features
 
 ### 🎯 Flag Visualization
@@ -199,18 +201,6 @@ const flagOverridePlugin = createFlagUrlOverridePlugin({
 });
 ```
 
-### Custom Logger Options
-
-The logger supports multiple log levels and can be customized:
-
-```javascript
-class CustomLogger {
-  debug(...args) { /* ... */ }
-  info(...args) { /* ... */ }
-  warn(...args) { /* ... */ }
-  error(...args) { /* ... */ }
-}
-```
 
 ## Troubleshooting
 
