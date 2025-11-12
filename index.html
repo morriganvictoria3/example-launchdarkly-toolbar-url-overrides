@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaunchDarkly SDK Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .panel {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .panel h2 {
+            margin-top: 0;
+            color: #405BFF;
+            border-bottom: 2px solid #405BFF;
+            padding-bottom: 10px;
+        }
+        #flags-container {
+            max-height: none;
+            overflow-y: auto;
+        }
+        .flag-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            padding: 12px;
+            margin-bottom: 10px;
+            background-color: #fafafa;
+        }
+        .flag-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .override-badge {
+            display: inline-block;
+            background-color: #FF9800;
+            color: white;
+            font-size: 0.7em;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 3px;
+            letter-spacing: 0.5px;
+        }
+        .flag-value {
+            margin: 5px 0;
+            font-family: monospace;
+        }
+        .flag-reason {
+            font-size: 0.9em;
+            color: #666;
+            font-style: italic;
+        }
+        #logs-container {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            max-height: 600px;
+            overflow-y: auto;
+        }
+        .log-entry {
+            margin: 5px 0;
+            padding: 5px;
+            border-left: 3px solid transparent;
+        }
+        .log-debug {
+            border-left-color: #808080;
+            color: #808080;
+        }
+        .log-info {
+            border-left-color: #4FC3F7;
+            color: #4FC3F7;
+        }
+        .log-warn {
+            border-left-color: #FFB74D;
+            color: #FFB74D;
+        }
+        .log-error {
+            border-left-color: #E57373;
+            color: #E57373;
+        }
+        .timestamp {
+            color: #888;
+            font-size: 10px;
+        }
+        .config-form {
+            background: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .config-form h2 {
+            margin-top: 0;
+            color: #405BFF;
+            border-bottom: 2px solid #405BFF;
+            padding-bottom: 10px;
+        }
+        .form-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .form-group label {
+            font-weight: bold;
+            color: #333;
+        }
+        .form-group input[type="text"] {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .form-group input[type="text"]:focus {
+            outline: none;
+            border-color: #405BFF;
+            box-shadow: 0 0 0 2px rgba(64, 91, 255, 0.1);
+        }
+        .form-group button {
+            padding: 10px 20px;
+            background-color: #405BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .form-group button:hover {
+            background-color: #2d45dd;
+        }
+        .form-group button:active {
+            background-color: #1f34bb;
+        }
+    </style>
+</head>
+<body>
+    <h1>LaunchDarkly SDK Demo</h1>
+
+    <div class="config-form">
+        <h2>Configuration</h2>
+        <form id="config-form" method="GET">
+            <div class="form-group">
+                <label for="clientSideId">Client-Side ID:</label>
+                <input type="text" id="clientSideId" name="clientSideId" placeholder="Enter your LaunchDarkly client-side ID" />
+                <button type="submit">Load SDK</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="container">
+        <div class="panel">
+            <h2>Feature Flags</h2>
+            <div id="flags-container">
+                <p>Initializing LaunchDarkly client...</p>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2>SDK Logs</h2>
+            <div id="logs-container">
+                <div class="log-entry log-info">
+                    <span class="timestamp">[Initializing...]</span> Waiting for SDK initialization...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import map for LaunchDarkly SDK -->
+    <script type="importmap">
+      {
+        "imports": {
+          "launchdarkly-js-client-sdk": "https://unpkg.com/launchdarkly-js-client-sdk@3.9.0/dist/ldclient.es.js?module",
+          "@launchdarkly/toolbar": "https://esm.sh/@launchdarkly/toolbar@1.2.0",
+          "./flag-url-override-plugin.js": "./flag-url-override-plugin.js"
+        }
+      }
+    </script>
+
+    <!-- LaunchDarkly Toolbar CDN Bundle -->
+    <script src="https://unpkg.com/@launchdarkly/toolbar@latest/cdn/toolbar.min.js"></script>
+
+    <!-- LaunchDarkly Client-Side SDK -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
