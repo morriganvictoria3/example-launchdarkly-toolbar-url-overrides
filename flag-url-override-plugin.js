@@ -47,11 +47,33 @@ export function createFlagUrlOverridePlugin(options = {}) {
     }
 
     /**
+     * Serialize a value for URL storage
+     * Adds quotes to strings that would be interpreted as other JSON types
+     */
+    function serializeValue(value) {
+        if (typeof value === 'string') {
+            // Check if the string would be parsed as a different type
+            try {
+                const parsed = JSON.parse(value);
+                // If parsing succeeds and changes the type, we need to quote it
+                if (typeof parsed !== 'string') {
+                    return JSON.stringify(value);
+                }
+            } catch (e) {
+                // Not valid JSON, just a regular string
+            }
+            // For regular strings, just return as-is (no extra quotes)
+            return value;
+        }
+        // For non-strings (booleans, numbers, objects), use JSON.stringify
+        return JSON.stringify(value);
+    }
+
+    /**
      * Sync overrides to URL using replaceState
      */
     function syncOverridesToUrl(overrides) {
         try {
-            logger.log('[syncOverridesToUrl] Called with overrides:', overrides);
             const url = new URL(window.location.href);
             const params = url.searchParams;
 
@@ -66,30 +88,25 @@ export function createFlagUrlOverridePlugin(options = {}) {
 
             // Add current overrides
             Object.entries(overrides).forEach(([flagKey, value]) => {
-                params.set(`${parameterPrefix}${flagKey}`, JSON.stringify(value));
+                params.set(`${parameterPrefix}${flagKey}`, serializeValue(value));
             });
 
             // Update URL without reloading or creating history entry
-            logger.log('[syncOverridesToUrl] About to call replaceState with URL:', url.toString());
             window.history.replaceState({}, '', url.toString());
-            logger.log('[syncOverridesToUrl] Successfully updated URL');
         } catch (error) {
-            logger.error('[syncOverridesToUrl] Error:', error);
+            logger.error('Failed to sync overrides to URL:', error);
         }
     }
 
     // Monkey patch setOverride to sync to URL and update display
     const originalSetOverride = plugin.setOverride.bind(plugin);
     plugin.setOverride = function(flagKey, value) {
-        logger.log('[setOverride] Called with flagKey:', flagKey, 'value:', value);
         originalSetOverride(flagKey, value);
-        logger.log('[setOverride] About to sync to URL');
         syncOverridesToUrl(this.getAllOverrides());
         // Notify callback if registered
         if (updateDisplayCallback) {
             updateDisplayCallback(flagKey, 'set');
         }
-        logger.log('[setOverride] Completed');
     };
 
     // Monkey patch removeOverride to sync to URL and update display
